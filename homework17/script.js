@@ -121,7 +121,33 @@ ${countAverageOfNum(array)}`);
 
    };
 
-   alert(fillArrays());
+   alert(fillArrays()); 
+
+   /*4.Створити функцію, яка прибирає з рядка всі символи, які ми передали другим аргументом.
+    'func(" hello world", ['l', 'd'])' поверне нам "heo wor".
+     Вихідний рядок та символи для видалення задає користувач. */
+
+     const removeChar =  (str, chars) => {
+        let arr = [];
+            for (let i = 0; i< str.length; i++){
+            for (let j = 0; j < chars.length; j++) {
+             if(str[i] === chars[j])  {
+                str = str.replaceAll(chars[j],'');
+              
+             }
+            }
+        }
+           
+            return str;
+
+        
+     }
+     const chars = ['l','w'];
+     alert(`String before changing
+     Hello world
+     String after changing
+     ${removeChar('Hello world',chars )}`);
+     
 
 
 
