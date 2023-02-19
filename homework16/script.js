@@ -23,6 +23,6 @@
     return result;
  };
 
- const key = generateKey(9, characters);
+ const key = generateKey(100, characters);
  console.log(key);
  
