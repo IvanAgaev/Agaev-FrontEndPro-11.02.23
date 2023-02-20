@@ -68,3 +68,11 @@ const ham = new Hamburger(Hamburger.SIZE_SMALL, Hamburger.STUFFING_CHEESE);
 ham.addTopping(Hamburger.TOPPING_MAYO);
 console.log(`У вашому замовленні ${ham.calculate()} калорій`);
 console.log(`Ваше замовлення коштує ${ham.calculatePrice()} тугриків`);
+
+console.log('\n');
+
+const ham2 = new Hamburger(Hamburger.SIZE_LARGE, Hamburger.STUFFING_CHEESE);
+ham2.addTopping(Hamburger.TOPPING_SAUCE);
+console.log(`У вашому замовленні ${ham2.calculate()} калорій`);
+console.log(`Ваше замовлення коштує ${ham2.calculatePrice()} тугриків`);
+
