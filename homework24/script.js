@@ -66,5 +66,5 @@ class Hamburger {
 
 const ham = new Hamburger(Hamburger.SIZE_SMALL, Hamburger.STUFFING_CHEESE);
 ham.addTopping(Hamburger.TOPPING_MAYO);
-console.log(ham.calculate());
-console.log(ham.calculatePrice());
+console.log(`У вашому замовленні ${ham.calculate()} калорій`);
+console.log(`Ваше замовлення коштує ${ham.calculatePrice()} тугриків`);
