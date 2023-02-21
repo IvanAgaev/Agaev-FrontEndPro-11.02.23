@@ -21,69 +21,59 @@ class Hamburger {
         switch(type) {
             case Hamburger.SIZE_SMALL:
                 return 20;
-                break;
             case Hamburger.SIZE_LARGE:
                 return 40;
-                break;
             case Hamburger.STUFFING_CHEESE: 
                 return 20;
-                break;
             case Hamburger.STUFFING_POTATO:
                 return 10;
-                break;
             case Hamburger.STUFFING_SALAD:
                  return 5;
-                 break;
+             case Hamburger.TOPPING_MAYO:
+                return 5;
+            case Hamburger.TOPPING_SAUCE:
+                return 0; 
             default:
                 return 0;
-                
-             
         }
     };
-    
+
     getPrice(type) {
         switch(type) {
             case Hamburger.SIZE_SMALL:
                 return 50;
-                break;
             case Hamburger.SIZE_LARGE:
                 return 100;
-                break;
             case Hamburger.STUFFING_CHEESE: 
                 return 10;
-                break;
             case Hamburger.STUFFING_POTATO:
                 return 15;
-                break;
             case Hamburger.STUFFING_SALAD:
                  return 20;
-                 break;
+            case Hamburger.TOPPING_MAYO:
+                return 20;
+            case Hamburger.TOPPING_SAUCE:
+                return 15;    
             default:
                 return 0;   
         }
     }
 
     addTopping(topping) {
-        if(topping === Hamburger.TOPPING_SAUCE) {
-            this._price += 15;
-        } else if (topping === Hamburger.TOPPING_MAYO) {
-            this._price += 20;
-            this._calories += 5;
-        }
-
+        this._calories += this.getCalories(topping);
+        this._price += this.getPrice(topping);
     };
 
     calculate() {
         this._calories += this.getCalories(this._size);
         this._calories += this.getCalories(this._stuffing);
+
         return this._calories;
-       
-        
-        
     };
     calculatePrice() { 
         this._price += this.getPrice(this._size);
         this._price += this.getPrice(this._stuffing);
+
         return this._price;
     }
 
