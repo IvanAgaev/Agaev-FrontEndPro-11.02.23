@@ -17,9 +17,9 @@ class Hamburger {
     };
 
     addTopping(topping) {
-        if(topping === 'sauce') {
+        if(topping === Hamburger.TOPPING_SAUCE) {
             this._price += 15;
-        } else if (topping === 'mayo') {
+        } else if (topping === Hamburger.TOPPING_MAYO) {
             this._price += 20;
             this._calories += 5;
         }
@@ -27,34 +27,34 @@ class Hamburger {
     };
 
     calculate() {
-        if (this._size === 'small') {
+        if (this._size ===  Hamburger.SIZE_SMALL) {
             this._calories += 20;  
-        } else if (this._size === 'large') {
+        } else if (this._size === Hamburger.SIZE_LARGE) {
             this._calories += 40;
         }
 
-        if (this._stuffing === 'cheese') {
+        if (this._stuffing === Hamburger.STUFFING_CHEESE) {
             this._calories += 20;
-        } else if (this._stuffing === 'salad') {
+        } else if (this._stuffing === Hamburger.STUFFING_SALAD) {
             this._calories += 5;
 
-        } else if (this._stuffing === 'potato') {
+        } else if (this._stuffing === Hamburger.STUFFING_POTATO) {
             this._calories += 10;
         }
         return this._calories;
         
     };
     calculatePrice() { 
-        if (this._size === 'small') {
+        if (this._size === Hamburger.SIZE_SMALL) {
             this._price += 50;
-        } else if (this._size === 'large') {
+        } else if (this._size === Hamburger.SIZE_LARGE) {
             this._price += 100;
         } 
-        if (this._stuffing === 'cheese') {
+        if (this._stuffing === Hamburger.STUFFING_CHEESE) {
             this._price += 10;
-        } else if (this._stuffing === 'salad') {
+        } else if (this._stuffing === Hamburger.STUFFING_SALAD) {
             this._price += 20;
-        } else if (this._stuffing === 'potato') {
+        } else if (this._stuffing === Hamburger.STUFFING_POTATO) {
             this._price += 15;
         }
         return this._price;
