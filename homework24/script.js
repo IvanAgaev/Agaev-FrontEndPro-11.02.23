@@ -11,10 +11,57 @@ class Hamburger {
     _sauce = '';
     _price = 0;
     _calories = 0;
+
     constructor(size, stuffing) {
         this._size = size;
         this._stuffing = stuffing;
     };
+
+    getCalories(type) {
+        switch(type) {
+            case Hamburger.SIZE_SMALL:
+                return 20;
+                break;
+            case Hamburger.SIZE_LARGE:
+                return 40;
+                break;
+            case Hamburger.STUFFING_CHEESE: 
+                return 20;
+                break;
+            case Hamburger.STUFFING_POTATO:
+                return 10;
+                break;
+            case Hamburger.STUFFING_SALAD:
+                 return 5;
+                 break;
+            default:
+                return 0;
+                
+             
+        }
+    };
+    
+    getPrice(type) {
+        switch(type) {
+            case Hamburger.SIZE_SMALL:
+                return 50;
+                break;
+            case Hamburger.SIZE_LARGE:
+                return 100;
+                break;
+            case Hamburger.STUFFING_CHEESE: 
+                return 10;
+                break;
+            case Hamburger.STUFFING_POTATO:
+                return 15;
+                break;
+            case Hamburger.STUFFING_SALAD:
+                 return 20;
+                 break;
+            default:
+                return 0;   
+        }
+    }
 
     addTopping(topping) {
         if(topping === Hamburger.TOPPING_SAUCE) {
@@ -27,39 +74,17 @@ class Hamburger {
     };
 
     calculate() {
-        if (this._size ===  Hamburger.SIZE_SMALL) {
-            this._calories += 20;  
-        } else if (this._size === Hamburger.SIZE_LARGE) {
-            this._calories += 40;
-        }
-
-        if (this._stuffing === Hamburger.STUFFING_CHEESE) {
-            this._calories += 20;
-        } else if (this._stuffing === Hamburger.STUFFING_SALAD) {
-            this._calories += 5;
-
-        } else if (this._stuffing === Hamburger.STUFFING_POTATO) {
-            this._calories += 10;
-        }
+        this._calories += this.getCalories(this._size);
+        this._calories += this.getCalories(this._stuffing);
         return this._calories;
+       
+        
         
     };
     calculatePrice() { 
-        if (this._size === Hamburger.SIZE_SMALL) {
-            this._price += 50;
-        } else if (this._size === Hamburger.SIZE_LARGE) {
-            this._price += 100;
-        } 
-        if (this._stuffing === Hamburger.STUFFING_CHEESE) {
-            this._price += 10;
-        } else if (this._stuffing === Hamburger.STUFFING_SALAD) {
-            this._price += 20;
-        } else if (this._stuffing === Hamburger.STUFFING_POTATO) {
-            this._price += 15;
-        }
+        this._price += this.getPrice(this._size);
+        this._price += this.getPrice(this._stuffing);
         return this._price;
-        
-
     }
 
 };
