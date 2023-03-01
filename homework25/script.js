@@ -17,7 +17,7 @@
             count(obj) {
             if (isNaN(Number(obj.X)) || isNaN(Number(obj.Y))) {
                 return `X та Y мають бути записані у числовому вигляді`
-            } else {
+            } 
             switch (obj.operator) {
                 case `+`:
                     return Number(obj.X) + Number(obj.Y);
@@ -32,30 +32,29 @@
                 default:
                     return 'Помилка. Не вірно введено знак';
             }
-        }
+        
     };
 
         input(obj) {
             obj.X = prompt('Впишіть нове число X');
             if (obj.X === null || obj.X.trim() === '' || isNaN(Number(obj.X))) {
                 return 'На жаль ви не захотіли ввести дані або дані записано не в числовому вигляді';
-            } else {
+            } 
             obj.operator = prompt('Впишіть новий оператор');
             if (obj.operator === null || obj.operator === ``) {
                 return 'На жаль ви не захотіли ввести дані';
-            } else {
+            } 
             obj.Y = prompt('Впишіть нове число Y');
             if (obj.Y === null || obj.Y.trim() === '' || isNaN(Number(obj.Y))) {
                 return `На жаль ви не захотіли ввести дані або дані записано не в числовому вигляді`;
             } 
                 return this.count(obj);
-            }
         }
             
-        };
+        ;
             check(obj) {
             let k = confirm(`Чи ви хочете виконати математичну дію ${obj.operator} з ${obj.X} та ${obj.Y}?`);
-            if(k) {
+            if (k) {
             return this.count(obj);
             }
                 return this.input(obj);
