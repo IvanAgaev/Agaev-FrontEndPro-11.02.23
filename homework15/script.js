@@ -5,9 +5,9 @@
 
  alert(`Old array
  ${array}`);
- 
+
  const removeFunction = (array,item) => {
-    array.map((element,index,array) => {
+    array.forEach((element,index) => {
      if (element === item) {
       array.splice(index,1);
      }});
