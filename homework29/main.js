@@ -1,17 +1,21 @@
-const btnHttp = document.querySelector('#https');
+const link1 = {href:'google.com'};
+const link2 = {href:'github.com'};
+const btnHttp = document.getElementById('http');
+const btnHttps = document.getElementById('https');
 
-const handler = (ev) => {
-    ev.preventDefault();
-    let k = document.getElementById('input').value;
-    if (k.trim() !== '' &&  k!==null && !k.startsWith('http')) {
-        k = `https://${k}`;
-        window.location.href = k;
-       
-    } else if (k.trim() === '' || k === null) {
-        alert('Рядок посилання не був заповненим');
+const handlerFirst = () => {
+    if (!link1.href.startsWith('http')) {
+        link1.href = 'http://' + link1.href;
     }
-   
+    window.location.href = link1.href;
+};
+const handlerSecond = () => {
+    if (!link2.href.startsWith('https')) {
+        link2.href = 'https://' + link2.href;
+    }
+    window.location.href = link2.href;
 };
 
-btnHttp.addEventListener('click', handler);
+btnHttp.addEventListener('click', handlerFirst);
+btnHttps.addEventListener('click', handlerSecond);
 
