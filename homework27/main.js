@@ -16,8 +16,7 @@ for (let i = 1; i<=10;i++) {
         c.innerHTML = o;
         k.append(c);
     }
-    o+=10;
-    o=o-10;
+   
 }
 
 
