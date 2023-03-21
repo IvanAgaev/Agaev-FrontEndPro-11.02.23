@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
+}
+.btn {
+    cursor: pointer;
+}
+.slider {
+    width: 530px;
+    height: 530px;
+    border: 2px solid red;
+    overflow: hidden;
+    
+
+  
+    
+  
+}
+.slider-line {
+    height: 256px;
+    width: 1590px;
+    display: flex;
+    position: relative;
+    left: 0px;
+    transition: all 1s ease;
+}
