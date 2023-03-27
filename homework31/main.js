@@ -168,6 +168,7 @@ function handleCategory(event) {
         selectedCategory = candidateCategory;
         selectedProduct = 0;
         renderProducts();
+        containerDetails.innerHTML = "";
     }
 };
 
