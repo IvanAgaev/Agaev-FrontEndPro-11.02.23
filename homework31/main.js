@@ -89,8 +89,8 @@ const productsByCategory = products.reduce((prev, item) => {
 }, {});
 
 const categoriesList = Object.keys(productsByCategory);
-let selectedCategory = 0;
-let selectedProduct = 0;
+let selectedCategory = categoriesList[0];
+let selectedProduct = productsByCategory[selectedCategory][0].id;
 const containerCategories = document.querySelector("[data-component=\"categories\"]");
 const containerProducts = document.querySelector("[data-component=\"products\"]");
 const containerDetails = document.querySelector("[data-component=\"details\"]");
@@ -121,25 +121,22 @@ function renderCategories() {
 
 function renderProducts() {
     containerProducts.innerHTML = "";
-    if (selectedCategory !== 0) {
-        productsByCategory[selectedCategory].forEach(product => {
-            const link2 = document.createElement("button");
-            link2.setAttribute("class", "list-group-item list-group-item-action category-item");
-            link2.setAttribute("data-product", product.id);
-            link2.textContent = product.title;
-            if (product.id === selectedProduct) {
-                link2.classList.add("active");
-            }
-            containerProducts.append(link2);
+    productsByCategory[selectedCategory].forEach(product => {
+        const link2 = document.createElement("button");
+        link2.setAttribute("class", "list-group-item list-group-item-action category-item");
+        link2.setAttribute("data-product", product.id);
+        link2.textContent = product.title;
+        if (product.id === selectedProduct) {
+            link2.classList.add("active");
+        }
+        containerProducts.append(link2);
 
-        })
-    }
+    })
 };
 
 function renderDetails() {
     containerDetails.innerHTML = "";
-    if (selectedProduct !== 0) {
-        const product = productsById[selectedProduct];
+    const product = productsById[selectedProduct];
    
        
         containerDetails.innerHTML = `
@@ -157,7 +154,6 @@ function renderDetails() {
    
 
 
-    }
 };
 
 function handleCategory(event) {
@@ -167,13 +163,11 @@ function handleCategory(event) {
         if (candidateCategory === selectedCategory) {
             return;
         }
-        
-        if (selectedCategory !== 0) {
-            document
-                .querySelector(`[data-category="${selectedCategory}"]`)
-                .classList
-                .remove("active");
-        }
+
+        document
+            .querySelector(`[data-category="${selectedCategory}"]`)
+            .classList
+            .remove("active");
 
         document
             .querySelector(`[data-category="${candidateCategory}"]`)
@@ -181,7 +175,7 @@ function handleCategory(event) {
             .add("active");
 
         selectedCategory = candidateCategory;
-        selectedProduct = 0;
+        selectedProduct = productsByCategory[selectedCategory][0].id;
         renderProducts();
         renderDetails();
         
@@ -196,12 +190,11 @@ function handleProduct(event) {
         if (candidateProduct === selectedProduct) {
             return;
         }
-        if (selectedProduct !== 0) {
-            document
-                .querySelector(`[data-product="${selectedProduct}"]`)
-                .classList
-                .remove("active");
-        }
+
+        document
+            .querySelector(`[data-product="${selectedProduct}"]`)
+            .classList
+            .remove("active");
 
         document
             .querySelector(`[data-product="${candidateProduct}"]`)
@@ -219,22 +212,16 @@ function handlePurchase(event) {
         const candidateProduct = event.target.getAttribute("data-purchase");
         selectedProduct = candidateProduct;
         productsByCategory[selectedCategory].forEach(product => {
-
             if (String(product.id) === selectedProduct) {
                 alert(`Дякую за придбання ${product.title} на суму в ${product.price} доларів`);
                 
             }
         })
-        selectedCategory = 0;
-        selectedProduct = 0;
-        containerDetails.innerHTML = "";
-        containerProducts.innerHTML = "";
-        const allNavItems = document.querySelectorAll(".list-group-item");
-
-        allNavItems.forEach(item => {
-            item.classList.remove("active");
-        })
-
+        selectedCategory = categoriesList[0];
+        selectedProduct = productsByCategory[selectedCategory][0].id;
+        renderCategories();
+        renderProducts();
+        renderDetails();
     }
 };
 
