@@ -66,9 +66,6 @@ const products = [
         "category": "Mac",
         "image": "https://jabko.ua/image/cache/catalog/products/2020/11/111209/5-2-1397x1397.jpg.webp"
     }
-
-
-
 ];
 
 const productsById = products.reduce((prev, item) => {
@@ -77,15 +74,13 @@ const productsById = products.reduce((prev, item) => {
 
 }, {});
 
-
 const productsByCategory = products.reduce((prev, item) => {
     if (!Array.isArray(prev[item.category])) {
         prev[item.category] = [];
     }
-
     prev[item.category].push(item);
+    
     return prev;
-
 }, {});
 
 const categoriesList = Object.keys(productsByCategory);
@@ -113,8 +108,6 @@ function renderCategories() {
             link.classList.add("active");
         }
         containerCategories.append(link);
-
-
     })
 
 };
@@ -140,8 +133,6 @@ function renderDetails() {
     containerDetails.innerHTML = "";
     if (selectedProduct !== 0) {
         const product = productsById[selectedProduct];
-
-
         containerDetails.innerHTML = `
          <div class="card">
              <div class="card-body">
@@ -152,11 +143,6 @@ function renderDetails() {
                                
                 <button data-purchase = "${product.id}" type="button" class="btn btn-success">Купити за ${product.price} доларів</button>
                  </div>`;
-
-
-
-
-
     }
 };
 
@@ -179,13 +165,9 @@ function handleCategory(event) {
             .querySelector(`[data-category="${candidateCategory}"]`)
             .classList
             .add("active");
-
         selectedCategory = candidateCategory;
         selectedProduct = 0;
         renderProducts();
-        
-
-
     }
 };
 
@@ -207,9 +189,7 @@ function handleProduct(event) {
             .querySelector(`[data-product="${candidateProduct}"]`)
             .classList
             .add("active");
-
         selectedProduct = candidateProduct;
-
         renderDetails();
     }
 };
