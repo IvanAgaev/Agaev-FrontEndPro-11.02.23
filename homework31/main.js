@@ -92,11 +92,14 @@ const categoriesList = Object.keys(productsByCategory);
 let selectedCategory = categoriesList[0];
 let selectedProduct = productsByCategory[selectedCategory][0].id;
 const containerCategories = document.querySelector("[data-component=\"categories\"]");
+const containerProducts = document.querySelector("[data-component=\"products\"]");
 const containerDetails = document.querySelector("[data-component=\"details\"]");
 
 containerCategories.addEventListener("click", handleCategory);
+containerProducts.addEventListener("click", handleProduct)
 containerDetails.addEventListener("click", handlePurchase);
 renderCategories();
+renderProducts();
 renderDetails();
 
 function renderCategories() {
@@ -110,19 +113,33 @@ function renderCategories() {
             link.classList.add("active");
         }
         containerCategories.append(link);
-        console.log(selectedCategory);
 
 
     })
 
 };
 
+function renderProducts() {
+    containerProducts.innerHTML = "";
+    productsByCategory[selectedCategory].forEach(product => {
+        const link2 = document.createElement("button");
+        link2.setAttribute("class", "list-group-item list-group-item-action category-item");
+        link2.setAttribute("data-product", product.id);
+        link2.textContent = product.title;
+        if (product.id === selectedProduct) {
+            link2.classList.add("active");
+        }
+        containerProducts.append(link2);
+
+    })
+};
+
 function renderDetails() {
     containerDetails.innerHTML = "";
-    productsByCategory[selectedCategory].forEach(product => {
-        let productInnerHtml = document.createElement("div");
-        productInnerHtml.setAttribute("class", "cols-4");
-        productInnerHtml.innerHTML = `
+    const product = productsById[selectedProduct];
+   
+       
+        containerDetails.innerHTML = `
          <div class="card">
              <div class="card-body">
                 <img src= "${product.image}"
@@ -132,12 +149,13 @@ function renderDetails() {
                                
                 <button data-purchase = "${product.id}" type="button" class="btn btn-success">Купити за ${product.price} доларів</button>
                  </div>`;
-        containerDetails.append(productInnerHtml);
+        
 
-    })
+   
 
 
 };
+
 function handleCategory(event) {
     if (event.target.hasAttribute("data-category")) {
         const candidateCategory = event.target.getAttribute("data-category");
@@ -154,11 +172,37 @@ function handleCategory(event) {
         document
             .querySelector(`[data-category="${candidateCategory}"]`)
             .classList
-            .remove("active");
+            .add("active");
 
         selectedCategory = candidateCategory;
+        selectedProduct = productsByCategory[selectedCategory][0].id;
+        renderProducts();
+        renderDetails();
+        
+        
+    }
+};
 
-        renderCategories();
+function handleProduct(event) {
+    if (event.target.hasAttribute("data-product")) {
+        const candidateProduct = event.target.getAttribute("data-product");
+
+        if (candidateProduct === selectedProduct) {
+            return;
+        }
+
+        document
+            .querySelector(`[data-product="${selectedProduct}"]`)
+            .classList
+            .remove("active");
+
+        document
+            .querySelector(`[data-product="${candidateProduct}"]`)
+            .classList
+            .add("active");
+
+        selectedProduct = candidateProduct;
+
         renderDetails();
     }
 };
@@ -174,7 +218,9 @@ function handlePurchase(event) {
             }
         })
         selectedCategory = categoriesList[0];
+        selectedProduct = productsByCategory[selectedCategory][0].id;
         renderCategories();
+        renderProducts();
         renderDetails();
     }
 };

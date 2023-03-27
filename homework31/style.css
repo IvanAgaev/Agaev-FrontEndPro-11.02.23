@@ -8,4 +8,5 @@
 .list-group-item.active {
     background: rgb( 33,37,41);
     border: none;
+    color: white;
 }
