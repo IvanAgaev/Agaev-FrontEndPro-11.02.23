@@ -142,7 +142,7 @@ function renderDetails() {
         containerDetails.innerHTML = `
          <div class="card">
              <div class="card-body">
-                <img src= "${product.image}"
+                <img src= "${product.image}" alt="${product.title}"
                                     class="card-img-top">
                 <h2 class="card-title">${product.title}</h2>
                  <p class="card-text">${product.description}</p></div>
