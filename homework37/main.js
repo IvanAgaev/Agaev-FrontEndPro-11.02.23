@@ -40,7 +40,6 @@ const removeItem = (item) => {
     item.remove();
 };
 
-
 form.addEventListener("input", (event) => {
     switch (event.target.id) {
         case "idNum":
@@ -69,12 +68,7 @@ form.addEventListener("submit", (event) => {
             .then(json => {
                 renderCartInfo(json);
                 const showComments = document.getElementsByClassName("showComments");
-
-                for (let i = 0; i < showComments.length; i++) {
-
-                    let item = showComments[i];
-
-                    item.addEventListener("click", event => {
+                    showComments.addEventListener("click", event => {
                         event.preventDefault();
     
                         const cardBody = item.parentElement;
@@ -82,13 +76,10 @@ form.addEventListener("submit", (event) => {
                         const idValue = idEl.textContent.trim();
                         fetch(`https://jsonplaceholder.typicode.com/posts/${idValue}/comments`)
                             
-                            .then(respon => {
-                                
-                                return respon.json();
-                            })
+                            .then(respon => respon.json())
 
                             .then(data => {
-                                item.setAttribute("disabled", true);
+                                showComments.setAttribute("disabled", true);
                                 const comSection = document.createElement("div");
                                 comSection.className = "comments__section";
                                 cardBody.append(comSection);
@@ -110,13 +101,11 @@ form.addEventListener("submit", (event) => {
                                     event.preventDefault();
                                     removeItem(commentSection);
                                     removeItem(hideComments);
-                                    item.removeAttribute("disabled");
+                                    showComments.removeAttribute("disabled");
                                 })
                               
                             })
                     })
-                }
-
             })
             .catch(error => {
                 alert(error);
