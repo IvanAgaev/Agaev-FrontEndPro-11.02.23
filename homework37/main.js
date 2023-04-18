@@ -78,11 +78,8 @@ form.addEventListener("submit", (event) => {
                         event.preventDefault();
     
                         const cardBody = item.parentElement;
-                        console.log(cardBody);
                         const idEl = cardBody.querySelector(".idVal");
                         const idValue = idEl.textContent.trim();
-                        console.log(idValue);
-
                         fetch(`https://jsonplaceholder.typicode.com/posts/${idValue}/comments`)
                             
                             .then(respon => {
