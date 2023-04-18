@@ -1,0 +1,40 @@
+:root {
+    --error-color: #dc3545;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+}
+.box {
+    background-color: lightblue;
+    border: 1px solid blue;
+    min-height: 50px;
+    font-size: 2rem;
+}
+
+.list-group-item.active {
+    background: rgb(33, 37, 41);
+    border: none;
+    color: #ffffff;
+}
+
+div.form-text{
+    color:red;
+}
+
+.numberOfItems{
+    width: 30px;
+    padding: 10px;
+    border: none;
+   
+}
+.changeNumber {
+    padding: 5px;
+}
+.is-val {
+    border-color: #28a745 !important;
+}
+.is-inv {
+    border-color: red !important;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
