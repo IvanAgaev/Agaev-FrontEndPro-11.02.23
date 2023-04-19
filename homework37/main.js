@@ -67,11 +67,11 @@ form.addEventListener("submit", (event) => {
 
             .then(json => {
                 renderCartInfo(json);
-                const showComments = document.getElementsByClassName("showComments");
+                const showComments = document.getElementsByClassName("showComments")[0];
                     showComments.addEventListener("click", event => {
                         event.preventDefault();
     
-                        const cardBody = item.parentElement;
+                        const cardBody = showComments.parentElement;
                         const idEl = cardBody.querySelector(".idVal");
                         const idValue = idEl.textContent.trim();
                         fetch(`https://jsonplaceholder.typicode.com/posts/${idValue}/comments`)
