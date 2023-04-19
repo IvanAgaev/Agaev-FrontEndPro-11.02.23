@@ -1,4 +1,5 @@
-import { isRequired, showError, showSuccess, removeValidClass } from "../homework37/modules/validation.js";
+import { isRequired } from "../homework37/modules/validation.js";
+import {showError,showSuccess,removeValidClass } from "../homework37/modules/formUI.js";
 
 const form = document.forms.getPostById;
 
