@@ -1,119 +1,116 @@
 import { isRequired } from "./modules/validation.js";
-import {showError,showSuccess,removeValidClass } from "./modules/formUI.js";
+import {showError, showSuccess, removeValidClass } from "./modules/formUI.js";
 
+const api_Endpoint = 'https://jsonplaceholder.typicode.com';
 const form = document.forms.getPostById;
+const postsInfo = document.querySelector(".posts__info");
+const commentSection = document.querySelector(".comments-section");
+const showComments = document.querySelector(".showComments");
+const hideComments = document.querySelector(".hideComments");
 
-const getIdValue = () => document.getElementById("idNum").value.trim();
+const getIdNumInput = () => document.getElementById("idNum");
+
+const getIdNumValue = () => getIdNumInput().value.trim();
+
+const renderCartInfo = (data) => {
+    postsInfo.style.display = "block";
+
+    const titleOfPost = postsInfo.querySelector(".card-title");
+    const numOfPost = postsInfo.querySelector(".idVal");
+    const postText = postsInfo.querySelector(".card-text");
+
+    titleOfPost.innerHTML = `${data.title}`;
+    numOfPost.innerHTML = `${data.id}`;
+    postText.innerHTML = `${data.body}`;
+};
+
+const renderComments = (data) => {
+    data.forEach(element => {
+        commentSection.insertAdjacentHTML("beforeend", `
+        <h5 class="card-title">Комментар від ${element.name}</h5>
+        <h6 class="card-subtitle">${element.email}</h6>
+        <p class="card-text">${element.body}</p>`);
+    });
+};
+
+const displayError = (error) => {
+    alert(error.message);
+};
+
+const apiCall = (url) => fetch(url).then(res => res.json());
+
+const getPostById = (postId) => apiCall(`${api_Endpoint}/posts/${postId}`);
+
+const getCommentsByPostId = (postId) => apiCall(`${api_Endpoint}/posts/${postId}/comments`);
+
+const handlePost = (event) => {
+    event.preventDefault();
+
+    if (!checkOneToHundred(getIdNumInput(), getIdNumValue())) {
+        checkOneToHundred(getIdNumInput(), getIdNumValue());
+    } else {
+        const postIdInput = document.getElementById("idNum");
+        const postId = postIdInput.value.trim();
+
+        getPostById(postId)
+            .then(renderCartInfo)
+            .catch(displayError);
+
+        form.reset();
+        removeValidClass();
+    }
+        
+};
+
+const handleShowComments = (event) => {
+    event.target.setAttribute("disabled", true);
+    const idOfPost = document.querySelector(".idVal").textContent;
+    
+    getCommentsByPostId(idOfPost)
+        .then(renderComments)
+        .catch(displayError);
+    
+    hideComments.style.display = "block";
+};
+
+const handleHideComments = () => {
+    hideComments.style.display = "none";
+    showComments.removeAttribute("disabled");
+    commentSection.innerHTML = "";
+};
 
 const isValidId = (num) => {
     return Number.isInteger(num) && num >= 1 && num <= 100;
 };
 
-const checkIdInput = () => {
+const checkOneToHundred = (element, elementValue) => {
     let valid = false;
-    const idInput = document.getElementById("idNum");
-    const idInputValue = getIdValue();
-    if (!isRequired(idInputValue)) {
-        showError(idInput, "Поле має бути заповнене");
-    } else if (!isValidId(+idInputValue)) {
-        showError(idInput, "Поле має бути заповнено числом від 1 до 100");
+
+    if (!isRequired(elementValue)) {
+        showError(element, "Поле має бути заповнене");
+    } else if (!isValidId(+elementValue)) {
+        showError(element, "Поле має бути заповнено числом від 1 до 100");
     } else {
         valid = true;
-        showSuccess(idInput);
+        showSuccess(element);
     }
+
     return valid;
 };
 
-const renderCartInfo = (data) => {
-    form.insertAdjacentHTML("afterend", `
-    <div class="card mb-5 w-50">
-             <div class="card-body">
-                <h5 class="card-title">${data.title}</h>
-                <h6 class="card-subtitle">Номер поста - <span class="idVal">${data.id}</span></h2>
-                 <p class="card-text">${data.body}</p>
-                <button type="button" class="btn btn-success showComments">Показати коментарі до публікації</button>
-                 </div>
-                 </div>`);
+const inputEventFunc = (event => {
+    checkOneToHundred(event.target, getIdNumValue());
+});
 
-};
+form.addEventListener("input", inputEventFunc);
+form.addEventListener("submit", handlePost);
 
-const removeItem = (item) => {
-    item.remove();
-};
-
-form.addEventListener("input", (event) => {
-    switch (event.target.id) {
-        case "idNum":
-            checkIdInput();
-            break;
+postsInfo.addEventListener("click", (event) => {
+    if (event.target.classList.contains("showComments")) {
+        handleShowComments(event);
+    } else if (event.target.classList.contains("hideComments")) {
+        handleHideComments();
     }
 });
 
-form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    if (form.nextElementSibling !== null) {
-        removeItem(form.nextElementSibling);
-    }
-    if (!checkIdInput()) {
-        checkIdInput();
-    } else {
-        fetch(`https://jsonplaceholder.typicode.com/posts/${getIdValue()}`)
-            
-            .then(response => {
-                if (response.status === 404) {
-                    return Promise.reject(new Error("лол 404"));
-                }
-                return response.json();
-            })
-
-            .then(json => {
-                renderCartInfo(json);
-                const showComments = document.getElementsByClassName("showComments")[0];
-                    showComments.addEventListener("click", event => {
-                        event.preventDefault();
-    
-                        const cardBody = showComments.parentElement;
-                        const idEl = cardBody.querySelector(".idVal");
-                        const idValue = idEl.textContent.trim();
-                        fetch(`https://jsonplaceholder.typicode.com/posts/${idValue}/comments`)
-                            
-                            .then(respon => respon.json())
-
-                            .then(data => {
-                                showComments.setAttribute("disabled", true);
-                                const comSection = document.createElement("div");
-                                comSection.className = "comments__section";
-                                cardBody.append(comSection);
-                                const commentSection = document.querySelector(".comments__section");
-                                data.forEach(element => {
-                                    commentSection.insertAdjacentHTML("beforeend", `
-                                
-                                    <h5 class="card-title">Комментар від ${element.name}</h5>
-                                    <h6 class="card-subtitle">${element.email}</h6>
-                                    <p class="card-text">${element.body}</p>
-                                </div>`)
-                              
-                                });
-                                commentSection.insertAdjacentHTML("beforeend",
-                                    '<button type="button" class="btn btn-light hideComments">Сховати комментарі</button>');
-                                 
-                                const hideComments = document.querySelector(".hideComments");
-                                hideComments.addEventListener("click", (event) => {
-                                    event.preventDefault();
-                                    removeItem(commentSection);
-                                    removeItem(hideComments);
-                                    showComments.removeAttribute("disabled");
-                                })
-                              
-                            })
-                    })
-            })
-            .catch(error => {
-                alert(error);
-            })
-
-        form.reset();
-        removeValidClass();
-    }
-});
 
