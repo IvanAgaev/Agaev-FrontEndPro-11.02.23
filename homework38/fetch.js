@@ -1,5 +1,5 @@
 const selectForm = document.forms.select;
-const API_ENDPOINT = "http://api.openweathermap.org";
+const API_ENDPOINT = "https://api.openweathermap.org";
 const API_WEATHER = `${API_ENDPOINT}/data/2.5/weather`;
 
 getWeather();
