@@ -45,8 +45,8 @@ async function getWeather() {
         const weatherPromise = await fetch(`${API_WEATHER}?q=${valOfselected}&units=metric&APPID=5d066958a60d315387d9492393935c19`);
 
         if (!weatherPromise.ok) {
-            const message = "Error " + response.status;
-            throw new Error("message");
+            const message = "Error " + weatherPromise.status;
+            throw new Error(message);
         }
    
         const weatherData = await weatherPromise.json();
