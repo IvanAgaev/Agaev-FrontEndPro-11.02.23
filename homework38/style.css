@@ -13,7 +13,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 98vh;
   flex-direction: column;
   -moz-column-gap: 30px;
        column-gap: 30px;
