@@ -42,7 +42,14 @@ async function getWeather() {
     try {
         const select = document.getElementById("city");
         const valOfselected = select.options[select.selectedIndex].value;
-        const weatherPromise = await fetch(`${API_WEATHER}?q=${valOfselected}&units=metric&APPID=5d066958a60d315387d9492393935c19`);
+
+        const params = new URLSearchParams({
+            q: valOfselected,
+            units: "metric",
+            APPID: "5d066958a60d315387d9492393935c19",
+        });
+
+        const weatherPromise = await fetch(`${API_WEATHER}?${params}`);
 
         if (!weatherPromise.ok) {
             const message = "Error " + weatherPromise.status;
