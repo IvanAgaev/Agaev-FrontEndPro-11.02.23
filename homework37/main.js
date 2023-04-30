@@ -1,36 +1,51 @@
-import { isRequired } from "./modules/validation.js";
-import {showError, showSuccess, removeValidClass } from "./modules/formUI.js";
+import { isRequired, isIntegerVal, isGreatThan, isLessThan } from "./modules/validation.js";
+import { showError, showSuccess, removeValidClass } from "./modules/formUI.js";
+import { getFieldElement, getControlElement, getCaptionElement } from "./modules/getFormElements.js";
 
-const api_Endpoint = 'https://jsonplaceholder.typicode.com';
+const API_ENDPOINT = 'https://jsonplaceholder.typicode.com';
 const form = document.forms.getPostById;
 const postsInfo = document.querySelector(".posts__info");
 const commentSection = document.querySelector(".comments-section");
 const showComments = document.querySelector(".showComments");
 const hideComments = document.querySelector(".hideComments");
 
-const getIdNumInput = () => document.getElementById("idNum");
+const validatePostId = (value) => {
+    const errorRequired = isRequired(value);
 
-const getIdNumValue = () => getIdNumInput().value.trim();
+    if (errorRequired) {
+        return errorRequired;
+    }
+
+    const errorInteger = isIntegerVal(value);
+
+    if (errorInteger) {
+        return errorInteger;
+    }
+
+    const errorGreatThan = isGreatThan(value, 100);
+
+    if (errorGreatThan) {
+        return errorGreatThan;
+    }
+
+    return isLessThan(value, 0);
+};
 
 const renderCartInfo = (data) => {
-    postsInfo.style.display = "block";
-
-    const titleOfPost = postsInfo.querySelector(".card-title");
-    const numOfPost = postsInfo.querySelector(".idVal");
-    const postText = postsInfo.querySelector(".card-text");
-
-    titleOfPost.innerHTML = `${data.title}`;
-    numOfPost.innerHTML = `${data.id}`;
-    postText.innerHTML = `${data.body}`;
+        postsInfo.style.display = "block";
+        postsInfo.querySelector(".card-title").innerHTML = data.title;
+        postsInfo.querySelector(".idVal").innerHTML = data.id;
+        postsInfo.querySelector(".card-text").innerHTML = data.body;
 };
 
 const renderComments = (data) => {
-    data.forEach(element => {
-        commentSection.insertAdjacentHTML("beforeend", `
-        <h5 class="card-title">Комментар від ${element.name}</h5>
-        <h6 class="card-subtitle">${element.email}</h6>
-        <p class="card-text">${element.body}</p>`);
-    });
+    const content = data.reduce((html, item) => html + (
+        `<h5 class="card-title">Комментар від ${item.name}</h5>
+        <h6 class="card-subtitle">${item.email}</h6>
+        <p class="card-text">${item.body}</p>`), "");
+    
+    commentSection.insertAdjacentHTML("beforeend", content);
+   
 };
 
 const displayError = (error) => {
@@ -39,28 +54,9 @@ const displayError = (error) => {
 
 const apiCall = (url) => fetch(url).then(res => res.json());
 
-const getPostById = (postId) => apiCall(`${api_Endpoint}/posts/${postId}`);
+const getPostById = (postId) => apiCall(`${API_ENDPOINT}/posts/${postId}`);
 
-const getCommentsByPostId = (postId) => apiCall(`${api_Endpoint}/posts/${postId}/comments`);
-
-const handlePost = (event) => {
-    event.preventDefault();
-
-    if (!checkOneToHundred(getIdNumInput(), getIdNumValue())) {
-        checkOneToHundred(getIdNumInput(), getIdNumValue());
-    } else {
-        const postIdInput = document.getElementById("idNum");
-        const postId = postIdInput.value.trim();
-
-        getPostById(postId)
-            .then(renderCartInfo)
-            .catch(displayError);
-
-        form.reset();
-        removeValidClass();
-    }
-        
-};
+const getCommentsByPostId = (postId) => apiCall(`${API_ENDPOINT}/posts/${postId}/comments`);
 
 const handleShowComments = (event) => {
     event.target.setAttribute("disabled", true);
@@ -79,30 +75,31 @@ const handleHideComments = () => {
     commentSection.innerHTML = "";
 };
 
-const isValidId = (num) => {
-    return Number.isInteger(num) && num >= 1 && num <= 100;
-};
+const handlePost = (event) => {
+    event.preventDefault();
 
-const checkOneToHundred = (element, elementValue) => {
-    let valid = false;
+    const element = getControlElement("post-id");
+    const errorField = getCaptionElement("post-id");
+    const errorPostId = validatePostId(element.value.trim());
 
-    if (!isRequired(elementValue)) {
-        showError(element, "Поле має бути заповнене");
-    } else if (!isValidId(+elementValue)) {
-        showError(element, "Поле має бути заповнено числом від 1 до 100");
+    if (errorPostId) {
+        showError("post-id", errorPostId);
+        element.focus();
     } else {
-        valid = true;
-        showSuccess(element);
+        errorField.innerHTML = "";
+        showSuccess("post-id", "Успіх!");
+
+        getPostById(element.value.trim())
+            .then(renderCartInfo)
+            .catch(displayError);
+
+        form.reset();
+        handleHideComments();
+        removeValidClass();
     }
 
-    return valid;
 };
 
-const inputEventFunc = (event => {
-    checkOneToHundred(event.target, getIdNumValue());
-});
-
-form.addEventListener("input", inputEventFunc);
 form.addEventListener("submit", handlePost);
 
 postsInfo.addEventListener("click", (event) => {
