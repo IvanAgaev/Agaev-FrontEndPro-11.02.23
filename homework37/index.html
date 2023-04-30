@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-center align-items-center flex-column mt-5">
+            <form class="mb-5" name="getPostById">
+                
+                <div class="mb-3 form-field" data-field="post-id">
+                    <label for="idNum" class="form-label" data-label ="post-id">Введіть id поста від 1 до 100</label>
+                    <input type="text" class="form-control" id="idNum" name="post-id" data-control="post-id">
+                    <div id="emailHelp" class="form-text" data-caption="post-id"></div>
+                </div>
+
+                <div class="text-center">
+                    <button class="btn btn-primary" type="submit" id="submit">Вивести пост на екран</button>
+                </div>
+            </form>
+
+            <div style="display: none" class="posts__info card mb-5 w-50">
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <h6 class="card-subtitle">Номер поста - <span class="idVal"></span></h6>
+                    <p class="card-text"></p>
+                    <button type="button" class="btn btn-success showComments">Показати коментарі до публікації</button>
+                    <div class="comments-section my-3">
+                    </div>
+                    <button type="button" class="btn btn-light hideComments" style="display: none;">Сховати
+                        комментарі</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
