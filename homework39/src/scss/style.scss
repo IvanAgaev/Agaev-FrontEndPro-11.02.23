@@ -1,0 +1,28 @@
+@import 'fonts';
+body {
+    font-family: Montserrat;
+    font-size: 30px;
+    margin: 0;
+    padding: 0;
+    background: url("@img/flowerss.jpg");
+    
+
+    span {
+        color: white;
+    }
+
+
+}
+.box {
+    display: flex;
+    background: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    flex-direction: column;
+}
+a {
+    display: block;
+    text-decoration: none;
+    color: burlywood;
+}
