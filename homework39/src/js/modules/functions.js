@@ -11,11 +11,6 @@ export function isWebp() {
     testWebP(function (support) {
         let className = support === true ? 'webp' : 'no-webp';
         document.documentElement.classList.add(className);
-        if (className === 'webp') {
-            console.log(1);
-        } else {
-            console.log(2);
-        }
     });
 
 }
