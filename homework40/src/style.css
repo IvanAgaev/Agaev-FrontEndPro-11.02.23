@@ -1,0 +1,102 @@
+@import url(reset.css);
+
+body {
+    background: wheat;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+
+
+
+.navbar {
+
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.navitem {
+    color: darkred;
+    font-size: 25px;
+}
+.navitem.active {
+    color: blue;
+}
+
+.sidebar {
+    flex: 0 1 20%;
+
+    display: flex;
+    flex-direction: column;
+/*    
+    margin-left: 30px; */
+}
+
+.sidelink {
+    border: 1px solid grey;
+
+    margin-top: -1px;
+
+}
+
+.sidelink+.sidelink {
+    border-top: 0px;
+}
+
+.sideitem:hover {
+    background: rgba(205,
+        209,
+        228, 0.5);
+
+}
+
+.sideitem.active {
+    background: rgba(45, 85, 255, 0.9);
+    color: white;
+}
+
+
+
+.sideitem {
+    font-size: 20px;
+    color: darkred;
+    display: block;
+    padding: 10px;
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+    margin: 60px 0;
+    gap: 60px;
+    
+  
+}
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 300px;
+    grid-gap: 20px;
+    margin-right: 60px;
+  
+  
+}
+.gallery-item {
+    background: green;
+    border-radius: 10px;
+  
+    
+}
+.img {
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
