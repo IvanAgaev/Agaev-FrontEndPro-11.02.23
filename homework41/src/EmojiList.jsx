@@ -5,7 +5,7 @@ const EmojiList = ({ emojis, incrementCount }) => {
     
     if (!Array.isArray(emojis)) {
 
-        return; 
+        return undefined; 
     }
 
     return (
