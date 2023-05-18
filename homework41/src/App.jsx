@@ -58,7 +58,7 @@ function App() {
 
         <div className="resultcontainer">
           <Button onClick={handleShowToggle}>{show?'hide':'show'}</Button>
-          {show && <Winner items={emojis.sort((a, b) => b.count - a.count)} />}
+          {show && <Winner items={emojis.slice().sort((a, b) => b.count - a.count)} />}
         </div>
       </>
     )
