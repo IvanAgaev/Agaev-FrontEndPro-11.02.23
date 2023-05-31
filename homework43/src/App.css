@@ -1,0 +1,62 @@
+@import 'reset.css';
+
+html {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  background: beige;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 0;
+  flex-direction: column;
+  gap: 30px;
+}
+
+th,
+td {
+  border: 1px solid black;
+}
+
+th {
+  font-size: 20px; 
+  font-weight: bold;
+}
+
+td, th {
+  padding: 15px;
+}
+
+input[type='text'],
+input[type='email'] {
+  display: block;
+  width: 400px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  
+}
+
+.form-control {
+  margin-bottom: 20px;
+  text-align: left;
+}
+.hide {
+  display: none;
+}
+
+.btn {
+  margin: 0 auto;
+  display: block;
+}
