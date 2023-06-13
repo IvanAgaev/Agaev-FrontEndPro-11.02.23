@@ -2,15 +2,23 @@ import './styles.css';
 import { NewTodoForm } from './NewTodoForm';
 import {ToDoList} from './ToDoList'
 import { useSelector, useDispatch } from 'react-redux'
-import { actions } from './store/index';
+import { fetchUsers, addUser } from './asyncfunc';
+import { useEffect } from 'react';
 
 export default function App() {
   const todos = useSelector((state) => state.todos);
+  useEffect(() => {
+    dispatch(fetchUsers())
+
+  }, [])
 
   const dispatch = useDispatch();
 
   function addTodo(title) {
-    dispatch(actions.addToDo(title))
+    dispatch(addUser(title))
+    dispatch(fetchUsers())
+    
+    
   }
 
   return (

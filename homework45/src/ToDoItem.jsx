@@ -1,15 +1,16 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from './store/index.js';
+import { deleteUsers, updateUsers } from './asyncfunc.jsx';
 
 export function ToDoItem({id , todo}) {
 
     const dispatch = useDispatch();
     const deleteToDo = () => {
-        dispatch(actions.deleteToDo(todo.id))
+        dispatch(deleteUsers(todo.id))
     };
 
     const toggleToDo = () => {
-        dispatch(actions.toggleToDo(todo.id))
+        dispatch(updateUsers(String(todo.id), todo))
     };
     
     return (
