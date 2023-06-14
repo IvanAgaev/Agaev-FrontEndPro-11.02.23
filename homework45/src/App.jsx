@@ -13,6 +13,7 @@ export default function App() {
   }, [])
 
   const dispatch = useDispatch();
+  console.log(useSelector(state => state.isLoaded))
 
   function addTodo(title) {
     dispatch(addUser(title))

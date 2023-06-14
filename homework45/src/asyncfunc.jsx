@@ -6,54 +6,71 @@ const client = axios.create({
 });
 
 export const fetchUsers = () => {
-    
-    return function (dispatch) {
-        client.get()
-            .then(response => {
-                dispatch(actions.renderToDo(response.data))
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }
+
+    return async function (dispatch) {
+        try {
+            dispatch(actions.isLoading());
+            const response = await client.get();
+            dispatch(actions.changeToLoaded());
+            dispatch(actions.renderToDo(response.data));
+        } catch (error) {
+            console.error(error);
+        }
+    };
 };
 
 export const deleteUsers = (id) => {
 
-    return function (dispatch) {
-        client.delete(`${id}`)
-            .catch(error => {
-                console.error('Error during delete request', error);
-            });
-        dispatch(actions.deleteToDo(id))
+    return async function (dispatch) {
+        try {
+            dispatch(actions.isLoading())
+            const response = await client.delete(`${id}`);
+            dispatch(actions.changeToLoaded());
+            dispatch(actions.deleteToDo(id))
+        }
+        catch (error) {
+            console.error(error)
+        }
+      
+           
+        
     }
 };
 
 export const updateUsers = (id, todo) => {
-    return function (dispatch) {
-        const todoCompleted = todo.completed;
-        dispatch(actions.toggleToDo(id));
 
-        client.put(`${(id)}`, { ...todo, completed: !todoCompleted })
-            .catch(error => {
-                console.error('Error during PUT request', error);
-            });
+    return async function (dispatch) {
+        try {
+            const todoCompleted = todo.completed;
+            dispatch(actions.isLoading());
+            const response = await client.put(`${(id)}`, { ...todo, completed: !todoCompleted });
+            dispatch(actions.changeToLoaded());
+            dispatch(actions.toggleToDo(id));
+        } 
+        catch (error) {
+            console.error(error);
+        }
+        
     }
 };
 
 export const addUser = (title) => {
 
-    return function (dispatch) {
-        client.post(``, {
-            title,
-            completed: false
+    return async function (dispatch) {
+        try {
+            dispatch(actions.isLoading())
+             await client.post(``, {
+                title,
+                completed: false
 
-        })
-            .then(response => {
-                dispatch(fetchUsers())
-            })
-            .catch(error => {
-                console.error('Error during POST request', error);
-            });
+             });
+           
+            dispatch(fetchUsers());
+            dispatch(actions.isLoaded());
+        }
+        catch (error) {
+            console.error(error);
+        }
+          
     }
 };

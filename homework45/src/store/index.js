@@ -12,7 +12,7 @@ const persistConfig = {
 const todoSlice = createSlice(
     {
         name: 'TODO',
-        initialState: { todos: [] },
+        initialState: { todos: [], isLoaded: true },
         reducers: {
 
             deleteToDo(state, action) {
@@ -24,7 +24,14 @@ const todoSlice = createSlice(
             },
             renderToDo(state, action) {
                 state.todos = [...action.payload];
+                state.isLoaded = false;
             },
+            isLoading(state, action) {
+                state.isLoaded = true;
+            },
+            changeToLoaded(state, action) {
+                state.isLoaded = false;
+            }
           
         }
     }
