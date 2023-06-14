@@ -1,6 +1,5 @@
 import { createSlice, configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
-import axios from 'axios'
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
 
@@ -26,12 +25,12 @@ const todoSlice = createSlice(
                 state.todos = [...action.payload];
                 state.isLoaded = false;
             },
-            isLoading(state, action) {
+            isLoading(state) {
                 state.isLoaded = true;
             },
-            changeToLoaded(state, action) {
+            changeToLoaded(state) {
                 state.isLoaded = false;
-            }
+            },
           
         }
     }

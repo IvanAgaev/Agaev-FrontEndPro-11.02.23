@@ -14,7 +14,8 @@ export const fetchUsers = () => {
             dispatch(actions.changeToLoaded());
             dispatch(actions.renderToDo(response.data));
         } catch (error) {
-            console.error(error);
+            alert(error);
+            dispatch(actions.changeToLoaded());
         }
     };
 };
@@ -29,7 +30,8 @@ export const deleteUsers = (id) => {
             dispatch(actions.deleteToDo(id))
         }
         catch (error) {
-            console.error(error)
+            alert(error);
+            dispatch(actions.changeToLoaded());
         }
       
            
@@ -48,7 +50,8 @@ export const updateUsers = (id, todo) => {
             dispatch(actions.toggleToDo(id));
         } 
         catch (error) {
-            console.error(error);
+            alert(error);
+            dispatch(actions.changeToLoaded());
         }
         
     }
@@ -66,10 +69,11 @@ export const addUser = (title) => {
              });
            
             dispatch(fetchUsers());
-            dispatch(actions.isLoaded());
+            dispatch(actions.changeToLoaded());
         }
         catch (error) {
-            console.error(error);
+            alert(error);
+            dispatch(actions.changeToLoaded())
         }
           
     }
